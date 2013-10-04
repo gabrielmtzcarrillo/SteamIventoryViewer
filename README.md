@@ -18,7 +18,7 @@
 
 #USAGE:
 - Upload files inside **www/**
-- Change the **define('APIKEY','');** to **define('APIKEY','YOUR STEAM APIKEY');** in **data/update_schema.php** and **lib/viewer_l1.php**
+- Change the **define('APIKEY','');** to **define('APIKEY','YOUR STEAM APIKEY');** in **data/update_schema.php** and **lib/steam_L1.php**
 - Browse **(your site)**/data/update_schema.php
 - ???
 - Profit!
