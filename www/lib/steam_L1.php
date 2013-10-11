@@ -1,5 +1,5 @@
 <?php
-define('APIKEY','');
+define('APIKEY','your_api_key_here');
 include('io_L1.php');
 
 function open_backpack($steamid,$onlyTradeable = true){
@@ -121,6 +121,7 @@ $tmp = open_json('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v000
 if (!isset($tmp['response']))
 {
 	$profile['name']='Name';
+	$profile['steam'] = '';
 	$profile['status']=0;
 	$profile['url']='#';
 	$profile['avatar']='';
@@ -129,8 +130,8 @@ if (!isset($tmp['response']))
 else
 {
 	$profile['name']=$tmp['response']['players']['0']['personaname'];
+	$profile['steam']=$tmp['response']['players']['0']['steamid'];
 	$profile['status']=$tmp['response']['players']['0']['personastate'];
-	
 	switch ($profile['status'])
 	{
 		case 1:
@@ -159,7 +160,7 @@ else
 		default:
 		$profile['personastate']='Offline';
 	}
-
+	
 	$profile['url']=$tmp['response']['players']['0']['profileurl'];
 	$profile['avatar']=$tmp['response']['players']['0']['avatarmedium'];
 }

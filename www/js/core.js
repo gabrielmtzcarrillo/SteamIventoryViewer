@@ -44,7 +44,7 @@ function profile_ready()
 		return false;
 	}
 	bot = JSON.parse(result);
-	profile.innerHTML = '<img class="left avatar" src="'+bot.avatar+'" alt=""/><b>'+bot.name+'</b><br>'+bot.personastate;
+	profile.innerHTML = '<img class="left avatar" src="'+bot.avatar+'" alt=""/><b>'+bot.name+'</b><br>'+bot.personastate+'<br>'+bot.steam;
 }
 
 function loadTF2bp(){
@@ -94,18 +94,41 @@ var tmpStrbuilder = ['<div class="card"><img class="imgInv" src="http://media.st
 				qualityString = quality;
 			}
 			
-			tmpStrbuilder.push('<div class="card ',qualityString,'"><a href="http://wiki.teamfortress.com/scripts/itemredirect.php?id=',defindex,'"><img class="imgInv" src="http://media.steampowered.com/apps/440/icons/',tf2bp.schema[defindex].image,'" alt="" title="',tf2bp.schema[defindex].name,'" /></a><b>',tf2bp.stock[defindex][quality],' x ',tf2bp.schema[defindex].name,'</b></div>');
+			tmpStrbuilder.push('<div class="card ',qualityString,'"><a href="http://wiki.teamfortress.com/scripts/itemredirect.php?id=',defindex,'"><img class="imgInv" src="http://media.steampowered.com/apps/440/icons/',tf2bp.schema[defindex].image,'" alt="" title="',tf2bp.schema[defindex].name,'" /></a><br><b>',tf2bp.stock[defindex][quality],' x ',tf2bp.schema[defindex].name,'</b></div>');
 		}
 	}
 	card.innerHTML=tmpStrbuilder.join('');
 }
 
-function loadInventory(){
+function loadInventory_gifts(){
 	document.getElementById('backpack').innerHTML='<span class="card"><img src="img/loader.gif" alt="loading..."/><br><b>Loading inventory</b></span>';
-	loadUrl('data/inventory/','loadInventory_ready');
+	loadUrl('data/inventory/gifts/','loadInventory_gifts_ready');
 }
 
-function loadInventory_ready(){
+function loadInventory_gifts_ready(){
+backpack=document.getElementById('backpack');
+if(!result)
+{
+	backpack.innerHTML = "<b>Couldn't load TF2 backpack</b><br>¿Steam community down?";
+	return false;
+}
+bp = JSON.parse(result);
+tmpStrBuilder = ['If nothing appears gift inventory is set private or you have no gifts!<br>'];
+
+for (var id in bp)
+{
+	tmpStrBuilder.push('<div class="card"><img src="http://cdn.steamcommunity.com/economy/image/',bp[id].image,'/96x96" alt=""/><br><span class="code">',bp[id].stock,' x ',bp[id].name,'</span></div>');
+}
+
+backpack.innerHTML = tmpStrBuilder.join('');
+}
+
+function loadInventory_coupons(){
+	document.getElementById('backpack').innerHTML='<span class="card"><img src="img/loader.gif" alt="loading..."/><br><b>Loading inventory</b></span>';
+	loadUrl('data/inventory/coupons/','loadInventory_coupons_ready');
+}
+
+function loadInventory_coupons_ready(){
 backpack=document.getElementById('backpack');
 if(!result)
 {
@@ -117,9 +140,33 @@ tmpStrBuilder = [''];
 
 for (var id in bp)
 {
-	tmpStrBuilder.push('<div class="card"><img src="http://cdn.steamcommunity.com/economy/image/',bp[id].image,'/96x96" alt=""/><span class="code">',bp[id].stock,' x ',bp[id].name,'</span></div>');
+	tmpStrBuilder.push('<div class="card"><img src="http://cdn.steamcommunity.com/economy/image/',bp[id].image,'/96x96" alt=""/><br><span class="code">',bp[id].stock,' x ',bp[id].name,'</span></div>');
 }
 
 backpack.innerHTML = tmpStrBuilder.join('');
 }
+
+function loadInventory_community(){
+	document.getElementById('backpack').innerHTML='<span class="card"><img src="img/loader.gif" alt="loading..."/><br><b>Loading inventory</b></span>';
+	loadUrl('data/inventory/community/','loadInventory_community_ready');
+}
+
+function loadInventory_community_ready(){
+backpack=document.getElementById('backpack');
+if(!result)
+{
+	backpack.innerHTML = "<b>Couldn't load TF2 backpack</b><br>¿Steam community down?";
+	return false;
+}
+bp = JSON.parse(result);
+tmpStrBuilder = [''];
+
+for (var id in bp)
+{
+	tmpStrBuilder.push('<div class="card"><img src="http://cdn.steamcommunity.com/economy/image/',bp[id].image,'/96x96" alt=""/><br><span class="code">',bp[id].stock,' x ',bp[id].name,'</span></div>');
+}
+
+backpack.innerHTML = tmpStrBuilder.join('');
+}
+
 

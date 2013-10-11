@@ -44,7 +44,7 @@ cursor:default;
 display:inline-block;
 padding:5px;
 margin:5px;
-width:110px;
+min-width:110px;
 min-height:20px;
 border-radius:2px;
 background-color:white;
@@ -55,7 +55,7 @@ vertical-align:middle;
 
 .card a{text-decoration:none;}
 .card a:hover{text-decoration:underline;}
-.card img{padding:0px 5px;border-radius:2px}
+.card img{padding:0px 5px;border-radius:2px; background-color:grey}
 
 .left{float:left}
 
