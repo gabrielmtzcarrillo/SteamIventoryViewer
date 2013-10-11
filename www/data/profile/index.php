@@ -1,4 +1,7 @@
 <?php
+include("../../inc/session.php");
 include('../../lib/steam_L1.php');
-echo json_encode(open_profile('76561198075507451'));
+if(isset($_SESSION['T2SteamAuth'])){
+	echo json_encode(open_profile($_SESSION['T2SteamID64']));
+}
 ?>
