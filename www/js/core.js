@@ -109,7 +109,7 @@ function loadInventory_gifts_ready(){
 backpack=document.getElementById('backpack');
 if(!result)
 {
-	backpack.innerHTML = "<b>Couldn't load TF2 backpack</b><br>¿Steam community down?";
+	backpack.innerHTML = "<b>Couldn't load Steam gifts inventory</b><br>¿Steam community down or not logged in?";
 	return false;
 }
 bp = JSON.parse(result);
@@ -132,7 +132,7 @@ function loadInventory_coupons_ready(){
 backpack=document.getElementById('backpack');
 if(!result)
 {
-	backpack.innerHTML = "<b>Couldn't load TF2 backpack</b><br>¿Steam community down?";
+	backpack.innerHTML = "<b>Couldn't load Steam coupons inventory</b><br>¿Steam community down or not logged in?";
 	return false;
 }
 bp = JSON.parse(result);
@@ -155,7 +155,7 @@ function loadInventory_community_ready(){
 backpack=document.getElementById('backpack');
 if(!result)
 {
-	backpack.innerHTML = "<b>Couldn't load TF2 backpack</b><br>¿Steam community down?";
+	backpack.innerHTML = "<b>Couldn't load Steam community inventory</b><br>¿Steam community down or not logged in?";
 	return false;
 }
 bp = JSON.parse(result);
