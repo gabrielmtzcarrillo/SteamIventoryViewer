@@ -109,7 +109,7 @@ function loadInventory_gifts_ready(){
 backpack=document.getElementById('backpack');
 if(!result)
 {
-	backpack.innerHTML = "<b>Couldn't load TF2 backpack</b><br>¿Steam community down?";
+	backpack.innerHTML = "<b>Couldn't load Steam gifts inventory</b><br>¿Steam community down or not logged in?";
 	return false;
 }
 bp = JSON.parse(result);
@@ -132,7 +132,7 @@ function loadInventory_coupons_ready(){
 backpack=document.getElementById('backpack');
 if(!result)
 {
-	backpack.innerHTML = "<b>Couldn't load TF2 backpack</b><br>¿Steam community down?";
+	backpack.innerHTML = "<b>Couldn't load Steam coupons inventory</b><br>¿Steam community down or not logged in?";
 	return false;
 }
 bp = JSON.parse(result);
@@ -155,7 +155,7 @@ function loadInventory_community_ready(){
 backpack=document.getElementById('backpack');
 if(!result)
 {
-	backpack.innerHTML = "<b>Couldn't load TF2 backpack</b><br>¿Steam community down?";
+	backpack.innerHTML = "<b>Couldn't load Steam community inventory</b><br>¿Steam community down or not logged in?";
 	return false;
 }
 bp = JSON.parse(result);
@@ -163,10 +163,21 @@ tmpStrBuilder = [''];
 
 for (var id in bp)
 {
-	tmpStrBuilder.push('<div class="card"><img src="http://cdn.steamcommunity.com/economy/image/',bp[id].image,'/96x96" alt=""/><br><span class="code">',bp[id].stock,' x ',bp[id].name,'</span></div>');
+var str = bp[id].name;
+if(str.contains('Trading Card')){
+var community = str.replace('(Trading Card)', '');
+tmpStrBuilder.push('<div class="card"><img src="http://cdn.steamcommunity.com/economy/image/',bp[id].image,'/96x96" alt=""/><br><span class="code">',bp[id].stock,' x ',community,'</span></div>');
+
+}
+else if(str.contains('Profile Background')){
+var community = str.replace('(Profile Background)', '');
+tmpStrBuilder.push('<div class="card"><img src="http://cdn.steamcommunity.com/economy/image/',bp[id].image,'/96x96" alt=""/><br><span class="code">',bp[id].stock,' x ',community,'</span></div>');
+
+}
+else{
+	tmpStrBuilder.push('<div class="card"><img src="http://cdn.steamcommunity.com/economy/image/',bp[id].image,'/96x96" alt=""/><br><span class="code">',bp[id].stock,' x ',str,'</span></div>');
+}
 }
 
 backpack.innerHTML = tmpStrBuilder.join('');
 }
-
-
