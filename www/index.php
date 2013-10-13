@@ -15,17 +15,19 @@
 		<aside>
 			<div id="profile"></div>
 			<div class="ribbon" ><font color="white">
-				<?php if(!isset($_SESSION['T2SteamAuth'])){ echo $login; }else{echo "<a class='button' href='?logout'>Logout</a><br>";} 
-					if(isset($_SESSION['T2SteamAuth'])){
+				<?php 
+				if(isset($_SESSION['T2SteamAuth'])){
 					$steamx = json_decode(file_get_contents("../steam/cache/{$_SESSION['T2SteamID64']}.json"));
 				
-						foreach (($steamx->response->players) as $player)
-						{
-							$steam = $player->steamid;
-						}
-						echo $steam;
+					foreach (($steamx->response->players) as $player)
+					{
+						$steam = $player->steamid;
+					}
+					echo "<a class='button' href='?logout'>Logout</a><br>";
+					echo $steam;
+				}else{
+					echo $login;
 				}
-				
 				?>
 				<hr>
 				<a class="button" href="#" onClick="loadTF2bp();">Load TF2 Backpack</a>
