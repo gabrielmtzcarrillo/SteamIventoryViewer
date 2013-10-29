@@ -1,12 +1,12 @@
 body{margin:0px;text-align:justify;font-family:verdana;font-size:0.8em;background-color:#EEE;}
 
 aside{
-position:absolute;
+position:fixed;
 display:block;
 left:0px;
 top:0px;
-padding:10px;
-width:230px;
+padding:5px;
+width:240px;
 min-height:200px;
 text-align:left;
 }
@@ -27,13 +27,12 @@ footer a:hover{text-decoration:underline}
 footer a:visited{color:white}
 
 .button{
-display:inline-block;margin:2px;padding:3px;cursor:default;font-family:verdana;font-size:0.8em;color:white;
-text-align:center;vertical-align:middle;text-decoration:none;width:64px;min-height:64px;
+display:inline-block;margin:2px;padding:5px;cursor:default;font-family:verdana;font-size:0.8em;color:white;
+text-align:center;vertical-align:middle;text-decoration:none;width:64px;min-height:16px;
 }
 .button:hover{
 color:black;background: -moz-linear-gradient(top, #FF5, #FFCC33);background-color:orange
 }
-
 .ribbon{
 cursor:default;text-align:center;width:100%;padding:5px 0px;background-color:#333;margin-bottom:10px;
 background: -moz-linear-gradient(top, #333, #222)
@@ -44,29 +43,31 @@ cursor:default;
 display:inline-block;
 padding:5px;
 margin:5px;
-width:110px;
+min-width:110px;
+max-width:150px;
 min-height:20px;
 border-radius:2px;
 background-color:white;
-color:black;
+color:#014;
 text-align:center;
 vertical-align:middle;
 }
 
 .card a{text-decoration:none;}
 .card a:hover{text-decoration:underline;}
-.card img{padding:0px 5px;border-radius:2px}
+.loader{padding:10px !important; background-color:white}
 
-.left{float:left}
+.left{text-align:left !important}
+.centre{text-align:center !important}
+.right{text-align:right !important}
+.justify{text-align:justify !important}
 
-.avatar{display:inline-block;margin:0px 5px 2px 0px;vertical-align:text-top;border:2px solid gray;border-radius:2px;}
+.avatar{float:left;display:inline-block;margin:0px 5px 2px 0px;vertical-align:text-top;border:2px solid gray;border-radius:2px}
 .name{display:block;font-weight:bold;}
 .imgInv{width:96px;height:96px}
+.emoticon{padding:5px;background-image:url('../img/check.gif');border-radius:2px;}
+.emoticon:hover{background-image:none;background-color:#222}
 
-
-#backpack{
-text-align:center;
-}
 
 /*Qualities*/
 
@@ -106,3 +107,7 @@ img.valve:hover{background-color:#C3A}
 .d img{background-color:silver}
 img.d{border:1px solid gray;background-color:silver}
 
+@media screen and (max-width:450px){
+aside{position:static;padding:0px;margin:0px;width:100%;}
+#page{margin-left:0px}
+}

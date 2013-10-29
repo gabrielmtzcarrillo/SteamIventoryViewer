@@ -2,17 +2,17 @@
 <html lang="en-US">
 	<head>
 		<meta charset="UTF-8">
-		<title>Tradebot</title>
+		<title>Inventory Viewer</title>
 		<link rel="stylesheet" href="css/base.css"/>
 		<script type="text/javascript" src="js/core.js"></script>
 	</head>
 	
-	<body onLoad="loadProfile();loadTF2bp();">
+	<body onLoad="loadProfile('STEAMID');loadTF2bp('STEAMID');">
 		<aside>
 			<div id="profile"></div>
 			<div class="ribbon">
-				<a class="button" href="#" onClick="loadTF2bp();">Load TF2 Backpack</a>
-				<a class="button" href="#" onClick="loadInventory();">Load Steam Inventory</a>
+				<a class="button" href="#" onClick="loadTF2bp('STEAMID');">Load TF2 Backpack</a>
+				<a class="button" href="#" onClick="loadInventory('STEAMID');">Load Steam Inventory</a>
 			</div>
 		</aside>
 
@@ -22,6 +22,8 @@
 				<b>Images are extracted from the game Team Fortress 2.</b> The copyright for it is held by Valve Corporation, who created the software.<br>
 				<b>Powered</b> by <a href="https://developer.valvesoftware.com/wiki/Steam_Web_API">Steam Web API.</a><br>
 				<b>Webpage design and programming:</b> <a href="http://steamcommunity.com/profiles/76561198043117800">Gabriel Mtz Carrillo</a><br>
+				<b>Other inventories support added by:</b> <a href="http://steamcommunity.com/id/gamekingz">TheAnthonyNL</a><br>
+				<b>Cleanup:</b> <a href="http://steamcommunity.com/profiles/76561198054799429">Lagging Pyro</a>
 			</footer>		
 		</div>
 	</body>

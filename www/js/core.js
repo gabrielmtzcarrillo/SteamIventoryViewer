@@ -1,3 +1,5 @@
+var steamId = null;
+
 function loadUrl(url,funct)
 {
 	var xmlhttp;
@@ -30,38 +32,43 @@ function loadUrl(url,funct)
 	xmlhttp.send();
 }
 
-function loadProfile(){
-	document.getElementById('profile').innerHTML='<span class="card"><img src="img/loader.gif" alt="loading..."/><br><b>Loading profile</b></span>';
-	loadUrl('data/profile/','profile_ready');
+function loadProfile(steamid){
+	document.getElementById('profile').innerHTML='<img class="avatar loader" src="img/loader.gif" alt="loading..."/><b>Loading profile</b>';
+	loadUrl('data/profile/?id='+steamid,'profile_ready');
 }
 
 function profile_ready()
 {
 	profile=document.getElementById('profile');
-	if(!result)
+	bot = JSON.parse(result);
+	
+	if(!bot['success'])
 	{
-		profile.innerHTML = "Couldn't load profile X_x";
+		profile.innerHTML = "Couldn't load profile";
 		return false;
 	}
-	bot = JSON.parse(result);
-	profile.innerHTML = '<img class="left avatar" src="'+bot.avatar+'" alt=""/><b>'+bot.name+'</b><br>'+bot.personastate;
+	
+	profile.innerHTML = '<img class="avatar" src="'+bot.avatar+'" alt=""/><b>'+bot.name+'</b><br>'+bot.personastate+'<br>'+bot.steam;
 }
 
-function loadTF2bp(){
+function loadTF2bp(steamid){
 document.getElementById('backpack').innerHTML='<span class="card"><img src="img/loader.gif" alt="loading..."/><br><b>Loading Backpack</b></span>';
-loadUrl('data/inventory/tf2/','bp_ready');}
+loadUrl('data/inventory/tf2/?id='+steamid,'bp_ready');}
 
 function bp_ready(){
-card=document.getElementById('backpack');
-if(!result)
-{
-	card.innerHTML = "<b>Couldn't load TF2 backpack</b><br>¿Steam community down?";
-	return false;
-}
-tf2bp = JSON.parse(result);
-var classIcons;
-var qualityString;
-var tmpStrbuilder = ['<div class="card"><img class="imgInv" src="http://media.steampowered.com/apps/440/icons/',tf2bp.schema[5002].image,'" alt=""/><span class="name"><b>',tf2bp.metal,'</b> Refined</span></div>'];
+	card=document.getElementById('backpack');
+
+	tf2bp = JSON.parse(result);
+
+	if(!tf2bp.success)
+	{
+		card.innerHTML = "<b>Couldn't load TF2 backpack</b><br>¿Steam community down?";
+		return false;
+	}
+		
+	var classIcons;
+	var qualityString;
+	var tmpStrbuilder = ['<div class="card"><img class="imgInv" src="http://media.steampowered.com/apps/440/icons/',tf2bp.schema[5002].image,'" alt=""/><span class="name"><b>',tf2bp.metal,'</b> Refined</span></div>'];
 
 	for(var defindex in tf2bp.stock) {
 		for(var quality in tf2bp.stock[defindex])
@@ -86,6 +93,10 @@ var tmpStrbuilder = ['<div class="card"><img class="imgInv" src="http://media.st
 				qualityString = 's';
 				break;
 				
+				case '13':
+				qualityString = 'h';
+				break;
+				
 				case '600':
 				qualityString = 'd';
 				break;
@@ -94,32 +105,47 @@ var tmpStrbuilder = ['<div class="card"><img class="imgInv" src="http://media.st
 				qualityString = quality;
 			}
 			
-			tmpStrbuilder.push('<div class="card ',qualityString,'"><a href="http://wiki.teamfortress.com/scripts/itemredirect.php?id=',defindex,'"><img class="imgInv" src="http://media.steampowered.com/apps/440/icons/',tf2bp.schema[defindex].image,'" alt="" title="',tf2bp.schema[defindex].name,'" /></a><b>',tf2bp.stock[defindex][quality],' x ',tf2bp.schema[defindex].name,'</b></div>');
+			tmpStrbuilder.push('<div class="card ',qualityString,'"><a href="http://wiki.teamfortress.com/scripts/itemredirect.php?id=',defindex,'"><img class="imgInv" src="http://media.steampowered.com/apps/440/icons/',tf2bp.schema[defindex].image,'" alt="" title="',tf2bp.schema[defindex].name,'" /></a><br><b>',tf2bp.stock[defindex][quality],' x ',tf2bp.schema[defindex].name,'</b></div>');
 		}
 	}
 	card.innerHTML=tmpStrbuilder.join('');
 }
 
-function loadInventory(){
-	document.getElementById('backpack').innerHTML='<span class="card"><img src="img/loader.gif" alt="loading..."/><br><b>Loading inventory</b></span>';
-	loadUrl('data/inventory/','loadInventory_ready');
+function loadInventory(steamid,appid,context){
+	
+	if(appid!=undefined)
+		appid = '&appid='+appid;
+	else
+		appid = '&appid=753';
+	
+	if(context!=undefined)
+		context = '&context='+context;
+	else
+		context = '&context=6';
+	
+	document.getElementById('backpack').innerHTML='<span class="card"><img src="img/loader.gif" alt="" title="loading..."/><br><b>Loading...</b></span>';
+	loadUrl('data/inventory/?id='+steamid+appid+context,'loadInventory_ready');
 }
 
 function loadInventory_ready(){
 backpack=document.getElementById('backpack');
-if(!result)
+if(!tf2bp.success)
 {
-	backpack.innerHTML = "<b>Couldn't load TF2 backpack</b><br>¿Steam community down?";
+	backpack.innerHTML = "<b>Couldn't load inventory</b><br>¿Steam community down or not logged in?";
 	return false;
 }
 bp = JSON.parse(result);
-tmpStrBuilder = [''];
+tmpStrBuilder = ['If nothing appears, you inventory is set private or you have no items!<br>'];
 
 for (var id in bp)
 {
-	tmpStrBuilder.push('<div class="card"><img src="http://cdn.steamcommunity.com/economy/image/',bp[id].image,'/96x96" alt=""/><span class="code">',bp[id].stock,' x ',bp[id].name,'</span></div>');
+	if(bp[id].type.indexOf('Emoticon')!=-1)
+	style='class="emoticon"';
+	else
+	style='';
+	
+	tmpStrBuilder.push('<div class="card"><img ',style,' src="http://cdn.steamcommunity.com/economy/image/',bp[id].image,'/96x96" alt=""/><br><span class="name code">',bp[id].stock,' x ',bp[id].name,'</span></div>');
 }
 
 backpack.innerHTML = tmpStrBuilder.join('');
 }
-
