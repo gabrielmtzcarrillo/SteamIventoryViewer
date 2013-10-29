@@ -68,10 +68,11 @@ function open_backpack($steamid,$onlyTradeable = true){
 		$bp_item['used_slots']=count($bp_data->result->items);
 		$bp_item['success']=true;
 	
-		return $bp_item;
+		
 	}else{
-		return null;
+		$bp_item['success']=false;
 	}
+	return $bp_item;
 }
 
 function open_inventory($id,$appid,$contextid)
@@ -81,7 +82,7 @@ function open_inventory($id,$appid,$contextid)
 	$inv_item=array();
 	$inv_desc=array();
 	
-	if ($inventory['success']){
+	if (@$inventory['success']){
 		foreach ( $inventory['rgInventory'] as $k => $v )
 		{
 			$inv_item[$k]['class']=$v['classid'];
@@ -96,7 +97,8 @@ function open_inventory($id,$appid,$contextid)
 	}
 	else
 	{
-		return null;
+		$inventory['success']=false;
+		return $inventory;
 	}
 
 	$inventory = array();
@@ -126,7 +128,7 @@ function open_inventory($id,$appid,$contextid)
 function open_profile($steamid){
 $tmp = open_json('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key='.APIKEY.'&SteamIDs='.$steamid.'&format=json',true);
 
-if (!isset($tmp['response']))
+if (empty($tmp['response']['players']))
 {
 	$profile['name']='Name';
 	$profile['steam'] = '';

@@ -129,7 +129,7 @@ function loadInventory(steamid,appid,context){
 
 function loadInventory_ready(){
 backpack=document.getElementById('backpack');
-if(!result)
+if(!tf2bp.success)
 {
 	backpack.innerHTML = "<b>Couldn't load inventory</b><br>¿Steam community down or not logged in?";
 	return false;
