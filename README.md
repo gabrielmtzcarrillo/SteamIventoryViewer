@@ -18,10 +18,9 @@
 
 #USAGE:
 - Upload files inside **www/**
-- Change the **define('APIKEY','');** to **define('APIKEY','YOUR STEAM APIKEY');** in **data/update_schema.php** and **lib/steam_L1.php**
+- Change the **define('APIKEY','your_api_key_here');** in **lib/steam.php**
 - Browse **(your site)**/data/update_schema.php
+- Replace all **'STEAMID'** with the **'Steam Id'** from the account you want to show. (Don't know account id?, try http://steamidfinder.com/)
 - ???
 - Profit!
 
-#To do:
-- Add a login thing
