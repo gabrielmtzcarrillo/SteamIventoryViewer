@@ -17,11 +17,9 @@
 - Plain text editor (Notepad), I would recommend Notepad++ (http://notepad-plus-plus.org/)
 
 #USAGE:
-- Upload files inside **www/**
-- Change the **define('APIKEY','');** to **define('APIKEY','YOUR STEAM APIKEY');** in **data/update_schema.php** and **lib/steam_L1.php**
-- Browse **(your site)**/data/update_schema.php
+- Upload files inside **www/**.
+- Change the **define('APIKEY','your_api_key_here');** in **lib/steam.php**.
+- Browse **(your site)**/data/update_schema.php.
 - ???
 - Profit!
 
-#To do:
-- Add a login thing

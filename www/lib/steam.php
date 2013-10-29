@@ -1,12 +1,19 @@
 <?php
 define('APIKEY','your_api_key_here');
-include('io_L1.php');
+
+function open_json($url,$assoc = false){return @json_decode(file_get_contents($url),$assoc);}  
+function save_json($data,$path){$tmp = json_encode($data);file_put_contents($path, $tmp, LOCK_EX);}
 
 function open_backpack($steamid,$onlyTradeable = true){
 	$metal = 0;
 	
 	$bp_item = array();
-	$bp_data = open_json('http://api.steampowered.com/IEconItems_440/GetPlayerItems/v0001/?key='.APIKEY.'&SteamID='.$steamid.'&format=json',false,true);
+	$bp_data = open_json('http://api.steampowered.com/IEconItems_440/GetPlayerItems/v0001/?key='.APIKEY.'&SteamID='.$steamid.'&format=json',false);
+	
+	if (@!$bp_data->result->status){
+		$bp_item['success']=false;
+		return $bp_item;
+	}
 	
 	if (@$bp_data->result->status==1){
 		$schema=open_json(dirname(__FILE__).'/../data/schema.json',true);
@@ -52,14 +59,15 @@ function open_backpack($steamid,$onlyTradeable = true){
 				
 		}
 		
-		krsort($bp_item['stock']);
-		
 		$bp_item['schema'][5000]=$schema[5000];
 		$bp_item['schema'][5001]=$schema[5001];
 		$bp_item['schema'][5002]=$schema[5002];
 		$bp_item['schema'][5021]=$schema[5021];
 		$bp_item['metal']=round($metal/18,2);
-		
+		$bp_item['slots']=$bp_data->result->num_backpack_slots;
+		$bp_item['used_slots']=count($bp_data->result->items);
+		$bp_item['success']=true;
+	
 		return $bp_item;
 	}else{
 		return null;
@@ -116,7 +124,7 @@ function open_inventory($id,$appid,$contextid)
 }
 
 function open_profile($steamid){
-$tmp = open_json('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key='.APIKEY.'&SteamIDs='.$steamid.'&format=json',true,true);
+$tmp = open_json('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key='.APIKEY.'&SteamIDs='.$steamid.'&format=json',true);
 
 if (!isset($tmp['response']))
 {
@@ -126,6 +134,7 @@ if (!isset($tmp['response']))
 	$profile['url']='#';
 	$profile['avatar']='';
 	$profile['personastate']='Offline';
+	$profile['success'] = false;
 }
 else
 {
@@ -163,6 +172,7 @@ else
 	
 	$profile['url']=$tmp['response']['players']['0']['profileurl'];
 	$profile['avatar']=$tmp['response']['players']['0']['avatarmedium'];
+	$profile['success'] = true;
 }
 return $profile;
 }

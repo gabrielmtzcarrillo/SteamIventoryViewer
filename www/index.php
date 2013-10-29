@@ -1,7 +1,6 @@
 <?php
 	include "./inc/session.php";
 ?>
-
 <!DOCTYPE HTML>
 <html lang="en-US">
 	<head>
@@ -11,35 +10,29 @@
 		<script type="text/javascript" src="js/core.js"></script>
 	</head>
 	
-	<body onLoad="loadProfile();loadTF2bp();">
+	<body onLoad="<?php if(isset($_SESSION['T2SteamID64'])) echo "loadProfile('{$_SESSION['T2SteamID64']}')";?>">
 		<aside>
 			<div id="profile"></div>
 			<div class="ribbon" ><font color="white">
 				<?php 
 				if(isset($_SESSION['T2SteamAuth'])){
-					$steamx = json_decode(file_get_contents("../steam/cache/{$_SESSION['T2SteamID64']}.json"));
-				
-					foreach (($steamx->response->players) as $player)
-					{
-						$steam = $player->steamid;
-					}
-					echo "<a class='button' href='?logout'>Logout</a><br>";
-					echo $steam;
+					echo '<a class="button" href="?logout">Logout</a><hr>';
+					echo '<a class="button" href="#" onClick="loadTF2bp(\''.$_SESSION['T2SteamID64'].'\');">Load TF2 Backpack</a>';
+					echo '<a class="button" href="#" onClick="loadInventory(\''.$_SESSION['T2SteamID64'].'\',753,2);">Load Gifts Inventory</a>';
+					echo '<a class="button" href="#" onClick="loadInventory(\''.$_SESSION['T2SteamID64'].'\',753,3);">Load Coupons Inventory</a>';
+					echo '<a class="button" href="#" onClick="loadInventory(\''.$_SESSION['T2SteamID64'].'\',753,6);">Load Community Inventory</a>';
+					echo '<a class="button" href="#" onClick="loadInventory(\''.$_SESSION['T2SteamID64'].'\',570,2);">Load Dota2 Inventory</a>';
+					echo '<a class="button" href="#" onClick="loadInventory(\''.$_SESSION['T2SteamID64'].'\',730,2);">Load CS:GO Inventory</a>';
 				}else{
 					echo $login;
 				}
 				?>
-				<hr>
-				<a class="button" href="#" onClick="loadTF2bp();">Load TF2 Backpack</a>
-				<a class="button" href="#" onClick="loadInventory_gifts();">Load Gifts Inventory</a>
-				<a class="button" href="#" onClick="loadInventory_coupons();">Load Coupons Inventory</a>
-				<a class="button" href="#" onClick="loadInventory_community();">Load Community Inventory</a>				
 				<br>NOTE: Larger inventories takes longer to load!
 			</font></div>
 		</aside>
 
 		<div id="page">
-			<div id="backpack"></div>
+			<div id="backpack" class="centre"></div>
 			<footer>
 				<b>Images are extracted from the game Team Fortress 2.</b> The copyright for it is held by Valve Corporation, who created the software.<br>
 				<b>Powered</b> by <a href="https://developer.valvesoftware.com/wiki/Steam_Web_API">Steam Web API.</a><br>

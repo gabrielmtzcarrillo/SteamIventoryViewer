@@ -1,7 +1,6 @@
 <pre>
 <?php
-define('APIKEY','your_api_key_here');
-include('../lib/io_L1.php');
+include('../lib/steam.php');
 $schema=open_json('http://api.steampowered.com/IEconItems_440/GetSchema/v0001/?key='.APIKEY.'&format=json');
 
 $data=array();
