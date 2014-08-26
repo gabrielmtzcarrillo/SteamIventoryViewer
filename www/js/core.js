@@ -129,12 +129,8 @@ function loadInventory(steamid,appid,context){
 
 function loadInventory_ready(){
 backpack=document.getElementById('backpack');
-if(!tf2bp.success)
-{
-	backpack.innerHTML = "<b>Couldn't load inventory</b><br>¿Steam community down or not logged in?";
-	return false;
-}
 bp = JSON.parse(result);
+
 tmpStrBuilder = ['If nothing appears, you inventory is set private or you have no items!<br>'];
 
 for (var id in bp)
