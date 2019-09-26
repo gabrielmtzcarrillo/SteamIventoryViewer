@@ -1,23 +1,50 @@
 <pre>
 <?php
 include('../lib/steam.php');
-$schema=open_json('http://api.steampowered.com/IEconItems_440/GetSchema/v0001/?key='.APIKEY.'&format=json');
+
+$url = 'https://api.steampowered.com/IEconItems_440/GetSchemaItems/v1/?key='.APIKEY.'&format=json';
+$schema=open_json($url);
 
 $data=array();
 
-if ($schema->result->status){
-	foreach($schema->result->items as &$item){
-		$data[$item->defindex]['name']=$item->name;
-		$data[$item->defindex]['image']= str_replace('http://media.steampowered.com/apps/440/icons/','',$item->image_url);
-		$data[$item->defindex]['type']='undefined';
+$pending = true;
+$next = 0;
+
+do
+{
+	$url = 'https://api.steampowered.com/IEconItems_440/GetSchemaItems/v1/?key='.APIKEY.'&start='.$next.'&format=json';
+	$schema=open_json($url);
+	
+	if ($schema->result->status)
+	{
+		foreach($schema->result->items as &$item){
+			$data[$item->defindex]['name']=$item->name;
+			$data[$item->defindex]['image']= str_replace('http://media.steampowered.com/apps/440/icons/','',$item->image_url);
+			$data[$item->defindex]['type']= null;//$item->item_class;
+			$data[$item->defindex]['slot']= isset($item->item_slot)?$item->item_slot:null;
+			$data[$item->defindex]['item_class']=$item->item_class;
+			
+			if (isset($item->craft_class) && @$item->craft_class!=='')
+				$data[$item->defindex]['type']=$item->craft_class;
+			
+			if (@$item->craft_material_type!=='')
+				$data[$item->defindex]['type']=@$item->craft_material_type;
+			
+			if($data[$item->defindex]['type']==null)
+				$data[$item->defindex]['type'] = $data[$item->defindex]['item_class'];
+			
+		}
 		
-		if (@$item->craft_class!=='')
-			$data[$item->defindex]['type']=@$item->craft_class;
-		
-		if (@$item->craft_material_type!=='')
-			$data[$item->defindex]['type']=@$item->craft_material_type;
+		print_r($schema->result);
 	}
-}
+	
+	if(isset($schema->result->next)){
+		$next = $schema->result->next;
+	}else{
+		$pending = false;
+	}
+	
+}while($pending);
 
 $data[0]['name']='Bat';
 $data[1]['name']='Bottle';
@@ -76,6 +103,9 @@ $data[5000]['name']='Scrap';
 $data[5001]['name']='Reclaimed';
 $data[5002]['name']='Refined';
 $data[5021]['name']='Key';
+
+$data[5639]['type']='supply_crate';
+
  
 echo "\n".count($data)." Item definitions\n";
 save_json($data,'schema.json');
