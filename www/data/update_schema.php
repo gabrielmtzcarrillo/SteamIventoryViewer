@@ -1,13 +1,6 @@
 <pre>
 <?php
 include('../lib/steam.php');
-<<<<<<< HEAD
-$schema=open_json('http://api.steampowered.com/IEconItems_440/GetSchema/v0001/?key='.APIKEY.'&format=json');
-=======
-
-$url = 'https://api.steampowered.com/IEconItems_440/GetSchemaItems/v1/?key='.APIKEY.'&format=json';
-$schema=open_json($url);
->>>>>>> viewer
 
 $data=array();
 
@@ -39,7 +32,7 @@ do
 			
 		}
 		
-		print_r($schema->result);
+		//print_r($schema->result);
 	}
 	
 	if(isset($schema->result->next)){

@@ -32,9 +32,12 @@ $OpenID = new LightOpenID(HOST_NAME);
         if(!isset($_SESSION['T2SteamAuth'])){
  
             $_SESSION['T2SteamAuth'] = $OpenID->validate() ? $OpenID->identity : null;
-            
+			
+            $pos = strripos($OpenID->identity,'id');
+			$id = substr($OpenID->identity,$pos+3);
+			
             if($_SESSION['T2SteamAuth'] !== null){
-				$_SESSION['T2SteamID64'] = str_replace('http://steamcommunity.com/openid/id/','', $_SESSION['T2SteamAuth']);
+				$_SESSION['T2SteamID64'] = $id; //str_replace('https://steamcommunity.com/openid/id/','', $_SESSION['T2SteamAuth']);
             }
 			
             header('Location: .');

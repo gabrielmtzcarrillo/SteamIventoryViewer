@@ -1,5 +1,7 @@
+www/data/schema.json
 nppBackup
 *.bak
 *.log 
 [Tt]humbs.db
 *.DS_Store
+

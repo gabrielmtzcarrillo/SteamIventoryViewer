@@ -9,7 +9,7 @@ function open_backpack($steamid,$onlyTradeable = true){
 	$keys = 0;
 	
 	$bp_item = array();
-	$bp_data = open_json('http://api.steampowered.com/IEconItems_440/GetPlayerItems/v0001/?key='.APIKEY.'&SteamID='.$steamid.'&format=json',false);
+	$bp_data = open_json('https://api.steampowered.com/IEconItems_440/GetPlayerItems/v0001/?key='.APIKEY.'&SteamID='.$steamid.'&format=json',false);
 	
 	if (@!$bp_data->result->status){
 		$bp_item['success']=false;
@@ -68,12 +68,9 @@ function open_backpack($steamid,$onlyTradeable = true){
 		$bp_item['schema'][5001]=$schema[5001];
 		$bp_item['schema'][5002]=$schema[5002];
 		$bp_item['schema'][5021]=$schema[5021];
-		$bp_item['metal']=round($metal/18,2);
-<<<<<<< HEAD:www/lib/steam.php
-=======
-		$bp_item['keys']=$keys;
 		
->>>>>>> viewer:www/lib/steam_L1.php
+		$bp_item['metal']=round($metal/18,2);
+		$bp_item['keys']=$keys;
 		$bp_item['slots']=$bp_data->result->num_backpack_slots;
 		$bp_item['used_slots']=count($bp_data->result->items);
 		$bp_item['success']=true;
@@ -87,30 +84,44 @@ function open_backpack($steamid,$onlyTradeable = true){
 
 function open_inventory($id,$appid,$contextid)
 {
-	$inventory = open_json('http://steamcommunity.com/profiles/'.$id.'/inventory/json/'.$appid.'/'.$contextid.'/',true);
+	$url = 'https://steamcommunity.com/inventory/'.$id.'/'.$appid.'/'.$contextid;
+	$inventory = open_json($url,true);
 	
 	$inv_item=array();
 	$inv_desc=array();
 	
+	$id = '';
+	
 	if (@$inventory['success']){
-		foreach ( $inventory['rgInventory'] as $k => $v )
+		foreach ( $inventory['assets'] as $k => $v )
 		{
 			$inv_item[$k]['class']=$v['classid'];
 			$inv_item[$k]['instance']=$v['instanceid'];
 		}
-		foreach ( $inventory['rgDescriptions'] as $k => $v )
+		foreach ( $inventory['descriptions'] as $k => $v )
 		{
-			$inv_desc[$k]['name']=$v['name'];
-			$inv_desc[$k]['image']=$v['icon_url'];
-			$inv_desc[$k]['type']=$v['type'];
+			$id = $v['classid'].'_'.$v['instanceid'];
+			
+			$inv_desc[$id]['name']=$v['name'];
+			$inv_desc[$id]['image']=$v['icon_url'];
+			$inv_desc[$id]['type']=$v['type'];
 		}
+		
+		
+		$o['i'] = $inv_item;
+		$o['d'] = $inv_desc;
+		
+		file_put_contents('object.txt',print_r($o,true));
+		
 	}
 	else
 	{
 		$inventory['success']=false;
 		return $inventory;
 	}
-
+	
+	
+	
 	$inventory = array();
 
 	foreach($inv_item as $item)
