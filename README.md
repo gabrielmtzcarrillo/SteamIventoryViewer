@@ -1,5 +1,5 @@
 # Steam Iventory Viewer
-**Languages used:**
+## LANGUAGES
 *Client Side*
 - HTML
 - CSS
@@ -9,12 +9,12 @@
 - PHP
 - JSON
 
-# REQUIREMENTS:
+## REQUIREMENTS:
 - Web Hosting With PHP 5, for Local Testing I use XAMPP (http://www.apachefriends.org/en/xampp.html)
 - Steam API KEY (http://steamcommunity.com/dev/apikey)
 - Plain text editor (Notepad), I would recommend Notepad++ (http://notepad-plus-plus.org/)
 
-# USAGE:
+## USAGE:
 - Upload files inside **www/**
 - Change the **define('APIKEY','your_api_key_here');** line in **lib/steam.php**
 - Browse **(your site)**/data/update_schema.php
