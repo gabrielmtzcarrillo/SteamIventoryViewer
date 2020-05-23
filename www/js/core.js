@@ -59,6 +59,7 @@ function bp_ready(){
 	card=document.getElementById('backpack');
 
 	tf2bp = JSON.parse(result);
+<<<<<<< HEAD
 
 	if(!tf2bp.success)
 	{
@@ -69,7 +70,31 @@ function bp_ready(){
 	var classIcons;
 	var qualityString;
 	var tmpStrbuilder = ['<div class="card"><img class="imgInv" src="http://media.steampowered.com/apps/440/icons/',tf2bp.schema[5002].image,'" alt=""/><span class="name"><b>',tf2bp.metal,'</b> Refined</span></div>'];
+=======
+>>>>>>> viewer
 
+	if(!tf2bp.success)
+	{
+		card.innerHTML = "<b>Couldn't load TF2 backpack</b><br>¿Steam community down?";
+		return false;
+	}
+		
+	var classIcons;
+	var qualityString;
+	
+	var tmpStr;
+	
+	var hats = [''];
+	var weapons = [''];
+	var misc = [''];
+	var currency = [''];
+	
+	if(tf2bp.keys > 0)
+		currency.push('<div class="card"><img src="http://media.steampowered.com/apps/440/icons/',tf2bp.schema[5021].image,'" alt=""/><span class="name"><b>',tf2bp.keys,'</b> x Key</span></div>');
+	
+	if(tf2bp.metal > 0)
+		currency.push('<div class="card"><img src="http://media.steampowered.com/apps/440/icons/',tf2bp.schema[5002].image,'" alt=""/><span class="name"><b>',tf2bp.metal,'</b> Refined</span></div>');
+	
 	for(var defindex in tf2bp.stock) {
 		for(var quality in tf2bp.stock[defindex])
 		{
@@ -105,10 +130,38 @@ function bp_ready(){
 				qualityString = quality;
 			}
 			
+<<<<<<< HEAD
 			tmpStrbuilder.push('<div class="card ',qualityString,'"><a href="http://wiki.teamfortress.com/scripts/itemredirect.php?id=',defindex,'"><img class="imgInv" src="http://media.steampowered.com/apps/440/icons/',tf2bp.schema[defindex].image,'" alt="" title="',tf2bp.schema[defindex].name,'" /></a><br><b>',tf2bp.stock[defindex][quality],' x ',tf2bp.schema[defindex].name,'</b></div>');
+=======
+			tmpStr = '<a class="card '+qualityString+'" href="http://wiki.teamfortress.com/scripts/itemredirect.php?id='+defindex+'"><img src="http://media.steampowered.com/apps/440/icons/'+tf2bp.schema[defindex].image+'" alt="" title="'+tf2bp.schema[defindex].name+'" /><br><b>'+tf2bp.stock[defindex][quality]+' x '+tf2bp.schema[defindex].name+' ('+tf2bp.schema[defindex].type+','+quality+')</b></a>';
+			
+			switch(tf2bp.schema[defindex].type)
+			{
+				case 'hat':
+				case 'tf_wearable':
+					hats.push(tmpStr);
+				break;
+				
+				case 'weapon':
+					weapons.push(tmpStr);
+				break;
+				
+				case 'supply_crate':
+					currency.push(tmpStr);
+				break;
+				
+				default:
+					misc.push(tmpStr);
+				break;
+			}
+>>>>>>> viewer
 		}
 	}
-	card.innerHTML=tmpStrbuilder.join('');
+	
+	card.innerHTML ="<h1>Currency and Crates</h1>"+currency.join('');
+	card.innerHTML+="<h1>Hats</h1>"+hats.join('');
+	card.innerHTML+="<h1>Weapons</h1>"+weapons.join('');
+	card.innerHTML+="<h1>Misc</h1>"+misc.join('');
 }
 
 function loadInventory(steamid,appid,context){
@@ -129,12 +182,17 @@ function loadInventory(steamid,appid,context){
 
 function loadInventory_ready(){
 backpack=document.getElementById('backpack');
+<<<<<<< HEAD
 if(!tf2bp.success)
 {
 	backpack.innerHTML = "<b>Couldn't load inventory</b><br>¿Steam community down or not logged in?";
 	return false;
 }
 bp = JSON.parse(result);
+=======
+bp = JSON.parse(result);
+
+>>>>>>> viewer
 tmpStrBuilder = ['If nothing appears, you inventory is set private or you have no items!<br>'];
 
 for (var id in bp)

@@ -6,6 +6,7 @@ function save_json($data,$path){$tmp = json_encode($data);file_put_contents($pat
 
 function open_backpack($steamid,$onlyTradeable = true){
 	$metal = 0;
+	$keys = 0;
 	
 	$bp_item = array();
 	$bp_data = open_json('http://api.steampowered.com/IEconItems_440/GetPlayerItems/v0001/?key='.APIKEY.'&SteamID='.$steamid.'&format=json',false);
@@ -46,6 +47,10 @@ function open_backpack($steamid,$onlyTradeable = true){
 					$metal+=18;
 					$tradable = !$onlyTradeable;
 				break;
+				case 5021:
+					$keys++;
+					$tradable = !$onlyTradeable;
+				break;
 			}
 			
 			if ($tradable==true){
@@ -64,6 +69,11 @@ function open_backpack($steamid,$onlyTradeable = true){
 		$bp_item['schema'][5002]=$schema[5002];
 		$bp_item['schema'][5021]=$schema[5021];
 		$bp_item['metal']=round($metal/18,2);
+<<<<<<< HEAD:www/lib/steam.php
+=======
+		$bp_item['keys']=$keys;
+		
+>>>>>>> viewer:www/lib/steam_L1.php
 		$bp_item['slots']=$bp_data->result->num_backpack_slots;
 		$bp_item['used_slots']=count($bp_data->result->items);
 		$bp_item['success']=true;

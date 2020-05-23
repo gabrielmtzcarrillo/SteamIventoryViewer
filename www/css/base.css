@@ -39,9 +39,8 @@ background: -moz-linear-gradient(top, #333, #222)
 }
 
 .card{
-cursor:default;
 display:inline-block;
-padding:5px;
+padding:15px 5px;
 margin:5px;
 min-width:110px;
 max-width:150px;
@@ -50,11 +49,13 @@ border-radius:2px;
 background-color:white;
 color:#014;
 text-align:center;
+text-decoration:none;
 vertical-align:middle;
 }
 
 .card a{text-decoration:none;}
 .card a:hover{text-decoration:underline;}
+<<<<<<< HEAD
 .loader{padding:10px !important; background-color:white}
 
 .left{text-align:left !important}
@@ -67,17 +68,36 @@ vertical-align:middle;
 .imgInv{width:96px;height:96px}
 .emoticon{padding:5px;background-image:url('../img/check.gif');border-radius:2px;}
 .emoticon:hover{background-image:none;background-color:#222}
+=======
+.card img{padding-bottom:5px;width:96px;height:96px}
 
+.loader{padding:10px !important; background-color:white}
 
+.left{text-align:left !important}
+.centre{text-align:center !important}
+.right{text-align:right !important}
+.justify{text-align:justify !important}
+
+.avatar{float:left;display:inline-block;margin:0px 5px 2px 0px;vertical-align:text-top;border:2px solid gray;border-radius:2px}
+.name{display:block;font-weight:bold;}
+>>>>>>> viewer
+
+.emoticon{padding:5px;background-image:url('../img/check.gif');border-radius:2px;}
+.emoticon:hover{background-image:none;background-color:#222}
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> viewer
 /*Qualities*/
 
-.n{color:#A90}
-.n img{background-color:#BA0}
-.n img:hover{background-color:#ED1}
+.n{color:white}
+.n{background-color:#BA0}
+.n:hover{background-color:#ED1;color:#A90}
 
-.v{color:#457}
-.v img{background-color:#569}
-.v img:hover{background-color:#78B}
+.v{color:white/*#457*/}
+.v{background-color:#569}
+.v:hover{background-color:#78B}
 
 .g{color:#464}
 .g img{background-color:#586}
