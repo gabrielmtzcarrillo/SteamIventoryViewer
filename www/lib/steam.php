@@ -85,20 +85,34 @@ function open_backpack($steamid,$onlyTradeable = true){
 function open_inventory($id,$appid,$contextid)
 {
 	$url = 'https://steamcommunity.com/inventory/'.$id.'/'.$appid.'/'.$contextid;
-	$inventory = open_json($url,true);
+	
+	$inventory['success'] = false;
+	$inventory['count'] = 0;
+	
+	$data = open_json($url,true);
 	
 	$inv_item=array();
 	$inv_desc=array();
 	
 	$id = '';
 	
-	if (@$inventory['success']){
-		foreach ( $inventory['assets'] as $k => $v )
+	if (@$data['success'])
+	{
+		$inventory['success'] = true;
+		$inventory['count'] = $data['total_inventory_count'];
+		
+		if($data['total_inventory_count'] == 0)
+		{
+			return $inventory;
+		}
+		
+		foreach ( $data['assets'] as $k => $v )
 		{
 			$inv_item[$k]['class']=$v['classid'];
 			$inv_item[$k]['instance']=$v['instanceid'];
 		}
-		foreach ( $inventory['descriptions'] as $k => $v )
+		
+		foreach ( $data['descriptions'] as $k => $v )
 		{
 			$id = $v['classid'].'_'.$v['instanceid'];
 			
@@ -106,37 +120,25 @@ function open_inventory($id,$appid,$contextid)
 			$inv_desc[$id]['image']=$v['icon_url'];
 			$inv_desc[$id]['type']=$v['type'];
 		}
-		
-		
-		$o['i'] = $inv_item;
-		$o['d'] = $inv_desc;
-		
-		file_put_contents('object.txt',print_r($o,true));
-		
-	}
-	else
-	{
-		$inventory['success']=false;
+	}else{
 		return $inventory;
 	}
 	
-	
-	
-	$inventory = array();
+	$inventory['items'] = array();
 
 	foreach($inv_item as $item)
 	{
 		if(!isset($inventory[$item['class']]['stock']))
 		{
 			$tmp = $item['class'].'_'.$item['instance'];
-			$inventory[$item['class']]['stock']=1;
-			$inventory[$item['class']]['name']=$inv_desc[$tmp]['name'];
-			$inventory[$item['class']]['type']=$inv_desc[$tmp]['type'];
-			$inventory[$item['class']]['image']=$inv_desc[$tmp]['image'];
+			$inventory['items'][$item['class']]['stock']=1;
+			$inventory['items'][$item['class']]['name']=$inv_desc[$tmp]['name'];
+			$inventory['items'][$item['class']]['type']=$inv_desc[$tmp]['type'];
+			$inventory['items'][$item['class']]['image']=$inv_desc[$tmp]['image'];
 		}
 		else
 		{
-			$inventory[$item['class']]['stock']++;
+			$inventory['items'][$item['class']]['stock']++;
 		}
 	}
 	

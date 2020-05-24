@@ -18,9 +18,9 @@
 				if(isset($_SESSION['T2SteamAuth'])){
 					echo '<a class="button" href="?logout">Logout</a><hr>';
 					echo '<a class="button" href="#" onClick="loadTF2bp(\''.$_SESSION['T2SteamID64'].'\');">Load TF2 Backpack</a>';
-					echo '<a class="button" href="#" onClick="loadInventory(\''.$_SESSION['T2SteamID64'].'\',753,2);">Load Gifts Inventory</a>';
+					echo '<a class="button" href="#" onClick="loadInventory(\''.$_SESSION['T2SteamID64'].'\',753,1);">Load Gifts Inventory</a>';
 					echo '<a class="button" href="#" onClick="loadInventory(\''.$_SESSION['T2SteamID64'].'\',753,3);">Load Coupons Inventory</a>';
-					echo '<a class="button" href="#" onClick="loadInventory(\''.$_SESSION['T2SteamID64'].'\',753,1);">Load Community Inventory</a>';
+					echo '<a class="button" href="#" onClick="loadInventory(\''.$_SESSION['T2SteamID64'].'\',753,6);">Load Community Inventory</a>';
 					echo '<a class="button" href="#" onClick="loadInventory(\''.$_SESSION['T2SteamID64'].'\',570,2);">Load Dota2 Inventory</a>';
 					echo '<a class="button" href="#" onClick="loadInventory(\''.$_SESSION['T2SteamID64'].'\',730,2);">Load CS:GO Inventory</a>';
 				}else{

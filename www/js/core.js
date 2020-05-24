@@ -165,27 +165,34 @@ function loadInventory(steamid,appid,context){
 	loadUrl('data/inventory/?id='+steamid+appid+context,'loadInventory_ready');
 }
 
-function loadInventory_ready(){
-backpack=document.getElementById('backpack');
-
-if(!tf2bp.success)
+function loadInventory_ready()
 {
-	backpack.innerHTML = "<b>Couldn't load inventory</b><br>¿Steam community down or not logged in?";
-	return false;
-}
-bp = JSON.parse(result);
+	backpack=document.getElementById('backpack');
 
-tmpStrBuilder = ['If nothing appears, you inventory is set private or you have no items!<br>'];
+	bp = JSON.parse(result);
 
-for (var id in bp)
-{
-	if(bp[id].type.indexOf('Emoticon')!=-1)
-	style='class="emoticon"';
-	else
-	style='';
-	
-	tmpStrBuilder.push('<div class="card"><img ',style,' src="http://cdn.steamcommunity.com/economy/image/',bp[id].image,'/96x96" alt=""/><br><span class="name code">',bp[id].stock,' x ',bp[id].name,'</span></div>');
-}
+	tmpStrBuilder = [];
 
-backpack.innerHTML = tmpStrBuilder.join('');
+	if(bp.success)
+	{
+		if(bp.count > 0)
+		{
+			for (var id in bp.items)
+			{
+				if(bp.items[id].type.indexOf('Emoticon')!=-1)
+				style='class="emoticon"';
+				else
+				style='';
+				
+				tmpStrBuilder.push('<div class="card"><img ',style,' src="http://cdn.steamcommunity.com/economy/image/',bp.items[id].image,'/96x96" alt=""/><br><span class="name code">',bp.items[id].stock,' x ',bp.items[id].name,'</span></div>');
+			}
+		} else {
+			tmpStrBuilder.push("Empty inventory");
+		}
+		
+	}else{
+		tmpStrBuilder.push("Couldn't load inventory.");
+	}
+
+	backpack.innerHTML = tmpStrBuilder.join('');
 }
