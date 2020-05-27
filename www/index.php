@@ -12,11 +12,13 @@
 	
 	<body onLoad="<?php if(isset($_SESSION['T2SteamID64'])) echo "loadProfile('{$_SESSION['T2SteamID64']}')";?>">
 		<aside>
-			<div id="profile"></div>
-			<div class="ribbon" ><font color="white">
+			<div id="profile">
+				Profile
+			</div>
+			<div class="ribbon" >
 				<?php 
 				if(isset($_SESSION['T2SteamAuth'])){
-					echo '<a class="button" href="?logout">Logout</a><hr>';
+					echo '<a class="button" href="?logout">Logout</a><br>';
 					echo '<a class="button" href="#" onClick="loadTF2bp(\''.$_SESSION['T2SteamID64'].'\');">Load TF2 Backpack</a>';
 					echo '<a class="button" href="#" onClick="loadInventory(\''.$_SESSION['T2SteamID64'].'\',753,1);">Load Gifts Inventory</a>';
 					echo '<a class="button" href="#" onClick="loadInventory(\''.$_SESSION['T2SteamID64'].'\',753,3);">Load Coupons Inventory</a>';
@@ -28,11 +30,11 @@
 				}
 				?>
 				<br>NOTE: Larger inventories takes longer to load!
-			</font></div>
+			</div>
 		</aside>
 
 		<div id="page">
-			<div id="backpack" class="centre"></div>
+			<div id="backpack"></div>
 			<footer>
 				<br>
 				<b>Images extracted from the game Team Fortress 2.</b> The copyright for it is held by Valve Corporation, who created the software.<br>

@@ -143,10 +143,10 @@ function bp_ready(){
 		}
 	}
 	
-	card.innerHTML ="<h1>Currency and Crates</h1>"+currency.join('');
-	card.innerHTML+="<h1>Hats</h1>"+hats.join('');
-	card.innerHTML+="<h1>Weapons</h1>"+weapons.join('');
-	card.innerHTML+="<h1>Misc</h1>"+misc.join('');
+	card.innerHTML ='<h1>Currency and Crates</h1><div class="centre">'+currency.join('')+'</div>';
+	card.innerHTML+='<h1>Hats</h1><div class="centre">'+hats.join('')+'</div>';
+	card.innerHTML+='<h1>Weapons</h1><div class="centre">'+weapons.join('')+'</div>';
+	card.innerHTML+='<h1>Misc</h1><div class="centre">'+misc.join('')+'</div>';
 }
 
 function loadInventory(steamid,appid,context){
@@ -179,12 +179,12 @@ function loadInventory_ready()
 		{
 			for (var id in bp.items)
 			{
-				if(bp.items[id].type.indexOf('Emoticon')!=-1)
-				style='class="emoticon"';
-				else
-				style='';
+				style = 'card';
 				
-				tmpStrBuilder.push('<div class="card"><img ',style,' src="http://cdn.steamcommunity.com/economy/image/',bp.items[id].image,'/96x96" alt=""/><br><span class="name code">',bp.items[id].stock,' x ',bp.items[id].name,'</span></div>');
+				if(bp.items[id].type.indexOf('Emoticon')!=-1) style='emoticon';
+				if(bp.items[id].type.indexOf('Background')!=-1) style='background';
+				
+				tmpStrBuilder.push('<div class="card ',style,'"><img src="http://cdn.steamcommunity.com/economy/image/',bp.items[id].image,'/96x96" alt=""/><br><span class="name code">',bp.items[id].stock,' x ',bp.items[id].name,'</span></div>');
 			}
 		} else {
 			tmpStrBuilder.push("Empty inventory");
@@ -194,5 +194,5 @@ function loadInventory_ready()
 		tmpStrBuilder.push("Couldn't load inventory.");
 	}
 
-	backpack.innerHTML = tmpStrBuilder.join('');
+	backpack.innerHTML = '<div class="centre">'+tmpStrBuilder.join('')+'</div>';
 }

@@ -1,24 +1,22 @@
-body{margin:0px;text-align:justify;font-family:verdana;font-size:0.8em;background-color:#EEE;}
+body{margin:0px;text-align:justify;font-family:verdana;font-size:0.8em;background-color:#222;color:white;}
+
+h1{margin-top;0;border-bottom:2px solid white}
 
 aside{
-position:fixed;
+float:left;
 display:block;
-left:0px;
-top:0px;
 padding:5px;
 width:240px;
 min-height:200px;
 text-align:left;
 }
 
-#profile{padding:5px;background-color:#222;color:white;min-height:70px;}
+#profile{padding:5px;min-height:70px;}
 
 #page{
 margin-left:250px;
 min-height:250px;
-padding:10px 5px;
-color:white;
-background-color:#222;
+padding-top:5px;
 }
 
 footer{margin:5px 2px 2px 0px;padding:5px 10px;border-radius:2px;font-family:verdana;font-size:0.8em;}
@@ -27,15 +25,14 @@ footer a:hover{text-decoration:underline}
 footer a:visited{color:white}
 
 .button{
-display:inline-block;margin:2px;padding:5px;cursor:default;font-family:verdana;font-size:0.8em;color:white;
-text-align:center;vertical-align:middle;text-decoration:none;width:64px;min-height:16px;
+padding:5px;border-radius:2px; text-align:left; background-color:#444;
+display:block;margin:2px;cursor:default;font-family:verdana;color:white;text-decoration:none;
 }
 .button:hover{
 color:black;background: -moz-linear-gradient(top, #FF5, #FFCC33);background-color:orange
 }
 .ribbon{
-cursor:default;text-align:center;width:100%;padding:5px 0px;background-color:#333;margin-bottom:10px;
-background: -moz-linear-gradient(top, #333, #222)
+cursor:default;text-align:center;width:100%;padding:5px 0;margin-bottom:10px
 }
 
 .card{
@@ -49,13 +46,14 @@ border-radius:2px;
 background-color:white;
 color:#014;
 text-align:center;
-text-decoration:none;
+text-decoration:none !important;
 vertical-align:middle;
 }
 
 .card a{text-decoration:none;}
 .card a:hover{text-decoration:underline;}
-<<<<<<< HEAD
+.card img{padding-bottom:5px;max-width:96px}
+
 .loader{padding:10px !important; background-color:white}
 
 .left{text-align:left !important}
@@ -66,10 +64,8 @@ vertical-align:middle;
 .avatar{float:left;display:inline-block;margin:0px 5px 2px 0px;vertical-align:text-top;border:2px solid gray;border-radius:2px}
 .name{display:block;font-weight:bold;}
 .imgInv{width:96px;height:96px}
-.emoticon{padding:5px;background-image:url('../img/check.gif');border-radius:2px;}
-.emoticon:hover{background-image:none;background-color:#222}
-=======
-.card img{padding-bottom:5px;width:96px;height:96px}
+
+
 
 .loader{padding:10px !important; background-color:white}
 
@@ -80,52 +76,38 @@ vertical-align:middle;
 
 .avatar{float:left;display:inline-block;margin:0px 5px 2px 0px;vertical-align:text-top;border:2px solid gray;border-radius:2px}
 .name{display:block;font-weight:bold;}
->>>>>>> viewer
 
-.emoticon{padding:5px;background-image:url('../img/check.gif');border-radius:2px;}
-.emoticon:hover{background-image:none;background-color:#222}
+.emoticon{background-image:url('../img/check.gif')}
+.emoticon:hover{background-image:none;background-color:#444;color:white}
 
-<<<<<<< HEAD
-=======
-
->>>>>>> viewer
 /*Qualities*/
 
-.n{color:white}
-.n{background-color:#BA0}
+.n{background-color:#BA0;color:white}
 .n:hover{background-color:#ED1;color:#A90}
 
-.v{color:white/*#457*/}
-.v{background-color:#569}
+.v{background-color:#569;color:white}
 .v:hover{background-color:#78B}
 
-.g{color:#464}
-.g img{background-color:#586}
-.g img:hover{background-color:#7A8}
+.g {background-color:#586;color:white}
+.g:hover{background-color:#7A8;color:#464}
 
-.s{color:#A05125}
-.s img{background-color:#D73}
-.s img:hover{background-color:#F95}
+.s {background-color:#D73;color:white}
+.s:hover{background-color:#F95;color:#A05125}
 
-.u{color:#637}
-.u img{background-color:#95B}
-.u img:hover{background-color:#B7D}
+.u {background-color:#95B;color:white}
+.u:hover{background-color:#B7D;color:#637}
 
-.h{color:#1C8}
-.h img{background-color:#4FB}
-.h img:hover{background-color:#6FD}
+.h{background-color:#4FB;color:white}
+.h:hover{background-color:#6FD;color:#1C8;}
 
-.c{color:#584}
-.c img{background-color:#7B5}
-.c img:hover{background-color:#9D7}
+.c{background-color:#7B5;color:white}
+.c:hover{background-color:#9D7:color:#584;}
 
-.valve{color:#614}
-img.valve{background-color:#A18}
-img.valve:hover{background-color:#C3A}
+.valve{background-color:#A18;color:white}
+.valve:hover{background-color:#C3A;color:#614;}
 
-.d{color:gray}
-.d img{background-color:silver}
-img.d{border:1px solid gray;background-color:silver}
+.d {background-color:silver;color:white}
+.d {border:1px solid gray;background-color:silver;color:gray; }
 
 @media screen and (max-width:450px){
 aside{position:static;padding:0px;margin:0px;width:100%;}
